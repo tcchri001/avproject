@@ -2,7 +2,7 @@
 void player() //creates the user controlled rectangle
 {
   fill (255);
-  rectMode (CENTER); //Center of the rectangle is the reference point, not the top left corner 
+  imageMode(CENTER); //Center of the rectangle is the reference point, not the top left corner 
   image (sprite[index], x, y); //User controlled object is a sprite (series of images)
   x = (1-velocity)*oldx+velocity*a;    //Gives it a smooth movement
   y = (1-velocity)*oldy+velocity*b;

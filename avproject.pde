@@ -6,17 +6,19 @@ int index = 1;
 
 float x;
 float y;
-int a = 250;
-int b = 250;
+int a = 100;
+int b = 100;
 float oldx, oldy;
 float velocity = 0.05;
 
 //Variables for the X co-ordinates of the ground
 int rectOneX = 50, rectTwoX = 300, rectThreeX = 600;
 //Additional Varibles for the rectangles
-int rectY = 400, rectHeight = 400;
+int rectOneY = 400, rectTwoY = 50, rectThreeY = 250, rectHeight = 50;
 //Velocity variables for moving groud
-int xVel = 10;
+int xVel = 5;
+
+float air = 500;
 
 void setup(){
   size(1000, 600);
@@ -45,14 +47,20 @@ void draw(){
   land();
   player();
   boundaries();
+  
+  b++;
+  
 }
 
 
 void land(){
+  
+  rectMode(CENTER);
+  
   //This chunk of code creates 3 rectangles on-screen
-  rect(rectOneX, rectY, 200, rectHeight);
-  rect(rectTwoX, rectY, 200, rectHeight);
-  rect(rectThreeX, rectY, 200, rectHeight);
+  rect(rectOneX, rectOneY, 200, rectHeight);
+  rect(rectTwoX, rectTwoY, 200, rectHeight);
+  rect(rectThreeX, rectThreeY, 200, rectHeight);
   
   //This affects the X position of each rectangle by the value of xVel
   rectOneX -= xVel;
@@ -63,15 +71,22 @@ void land(){
   //go off-screen
   if (rectOneX < -200){
     rectOneX = 1000;
+    rectOneY = (int(random(200, 450)));
   }
   
   if (rectTwoX < -200){
     rectTwoX = 1000;
+    rectTwoY = (int(random(200, 450)));
   }
   
   if (rectThreeX < -200){
     rectThreeX = 1000;
+    rectThreeY = (int(random(200, 450)));
   }
+  
+  if (b <rectOneY){
+    b -=1;
+  } 
   
 }
 
