@@ -82,7 +82,7 @@ class Mainchar {
     if (charX<0) {
       charX += velocity;
     }
-    if (charY>width-50) {
+    if (charY>height-50) {
       charY -= velocity;
     }
     if (charY<0) {
@@ -92,29 +92,32 @@ class Mainchar {
 }
 
 class Platforms {
-
+  PImage platform;
   int rectX, rectY, rectWidth, rectHeight;
-  int rectVelocity = 5;
+  int rectVelocity = 4;
 
-  Platforms(int x, int y, int w, int h){
-    rectX = x;
+  Platforms(int x, int y, int w, int h) {
+    rectX = x; 
     rectY = y;
+   // rectX = (int(random(600, 800))); //Tried to randomise start position, failed hilariously
+   //rectY = (int(random(150, 350)));
     rectWidth = w;
     rectHeight = h;
   }
 
-  void displayPlat(){
-    rectMode(CENTER);
+  void displayPlat() {
+    platform = loadImage ("images/tiles.png");
+    //imageMode(CENTER);
 
-    rect(rectX, rectY, rectWidth, rectHeight);
+    image(platform, rectX, rectY, 100, 15); //rectangle platforms replaced with images
   }
 
-  void platMove(){
+  void platMove() {
     rectX -= rectVelocity;
   }
 
-  void platTransition(){
-    if (rectX < -200){
+  void platTransition() {
+    if (rectX < -200) {
       rectX = (int(random(700, 1000)));
       rectY = (int(random(150, 350)));
     }
