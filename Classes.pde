@@ -22,7 +22,7 @@ class Mainchar {
 
   int cycleRate, time, speed = 105;
 
-  float velocity = 4, gravity = 5;
+  float velocity = 3, gravity = 5;
 
   float charX = 100, charY = 100, charWid = 25, charHi = 25;
 
@@ -94,7 +94,7 @@ class Mainchar {
 class Platforms {
   PImage platform;
   int rectX, rectY, rectWidth, rectHeight;
-  int rectVelocity = 4;
+  int rectVelocity = 3;
 
   Platforms(int x, int y, int w, int h) {
     rectX = x; 

@@ -11,12 +11,16 @@ void setup() {
   player = new Mainchar();
   backdrop = loadImage ("images/sky.png");
   mainPlats = new Platforms[3];
+
+  mainPlats[0] = new Platforms(200, 200, 100, 15);
+  mainPlats[1] = new Platforms(420, 300, 100, 15);
+  mainPlats[2] = new Platforms(570, 350, 100, 15);
 }
 
 void draw() {
-  
+
   backpic();  //scrolling background image based on the x coordinate
-  tlx = tlx - 4;
+  tlx = tlx - 3;
   image (backdrop, tlx, 0);
 
   level();
@@ -37,21 +41,20 @@ void draw() {
 void level() {
 
   //This is the code for the first platform
-  mainPlats[0] = new Platforms(200, 200, 100, 15); //These values need to be set inside the class so that
-  //they aren't constantly overwriting the movement variables in the class
   mainPlats[0].displayPlat();
+  mainPlats[0].platMove();
   mainPlats[0].platTransition();
 
 
   //This is the code for the second platform
-  mainPlats[1] = new Platforms(420, 300, 100, 15);
   mainPlats[1].displayPlat();
+  mainPlats[1].platMove();
   mainPlats[1].platTransition();
 
 
   //This is the code for the third platform
-  mainPlats[2] = new Platforms(570, 350, 100, 15);
   mainPlats[2].displayPlat();
+  mainPlats[2].platMove();
   mainPlats[2].platTransition();
 }
 
