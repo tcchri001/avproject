@@ -22,11 +22,12 @@ class Mainchar {
 
   int cycleRate, time, speed = 105;
 
-  float velocity = 3, gravity = 5, jump = 75;
+  float velocity = 3, gravity = 4.5, jump = 130;
 
   float charX = 100, charY = 100, charWid = 25, charHi = 25;
 
   Mainchar() {
+    imageMode(CENTER);
     run = new PImage[6];
 
     idle = loadImage("images/sprite1.png");
@@ -94,7 +95,7 @@ class Mainchar {
 class Platforms {
   PImage platform;
   int rectX, rectY, rectWidth, rectHeight;
-  int rectVelocity = 6;
+  int rectVelocity = 10;
 
   Platforms(int x, int y, int w, int h) {
     rectX = x; 
@@ -108,8 +109,9 @@ class Platforms {
     platform = loadImage ("images/tiles.png");
     image(platform, rectX, rectY, rectWidth, rectHeight); //rectangle platforms replaced with images
 
-    if (person.charX > rectX && person.charX < rectX + rectWidth && person.charY < rectY){
-      player.charY = rectY - rectHeight-7.5;
+    if (person.charX > rectX && person.charX < rectX + rectWidth && person.charY < rectY && person.charY > rectY - rectHeight - (rectHeight/2)){
+      player.charY = rectY-rectHeight-(rectHeight/2);
+      platPoints += 1;
     }
   }
 
@@ -118,8 +120,8 @@ class Platforms {
   }
 
   void platTransition() {
-    if (rectX < -200) {
-      rectX = (int(random(700, 1000)));
+    if (rectX < -100) {
+      rectX = 750;
       rectY = (int(random(150, 350)));
     }
   }

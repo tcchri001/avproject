@@ -4,7 +4,8 @@ Platforms [] mainPlats;
 
 boolean moveR = false, moveL = false, idle = true;
 
-int tlx = 0;
+
+int tlx = 0, platPoints = 0;
 
 void setup() {
   size(750, 400);
@@ -12,15 +13,16 @@ void setup() {
   backdrop = loadImage ("images/sky.png");
   mainPlats = new Platforms[3];
 
-  mainPlats[0] = new Platforms(200, 200, 100, 15);
-  mainPlats[1] = new Platforms(420, 300, 100, 15);
-  mainPlats[2] = new Platforms(570, 350, 100, 15);
+  mainPlats[0] = new Platforms(450,300, 100, 15);
+  mainPlats[1] = new Platforms(550,300, 100, 15);
+  mainPlats[2] = new Platforms(650,300, 100, 15);
 }
 
 void draw() {
 
   backpic();  //scrolling background image based on the x coordinate
   level();
+  currentScore();
 
   player.boundaries();
   if (moveR == true) {
@@ -32,6 +34,7 @@ void draw() {
   } else if (idle == true) {
     player.displayIdle();
   }
+
 }
 
 
@@ -56,15 +59,22 @@ void level() {
   mainPlats[2].platTransition();
 }
 
+//Custom function for the background image
 void backpic ()
 {
   image (backdrop, tlx, 0);
 
   tlx = tlx - mainPlats[0].rectVelocity;
 
-  if (tlx <= -1500){ //back ground image is jumped to the rtight when it gets quite far off screen
+  if (tlx <= -1500){ //background image is jumped to the right when it gets quite far off screen
     tlx = 0;
   }
+}
 
+//Function which displays the current accumulated platform points
+void currentScore(){
+  fill(200);
+  textSize(15);
+  text("Current platform Score: " + platPoints, 0, 25);
 }
 

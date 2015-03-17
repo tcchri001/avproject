@@ -20,7 +20,8 @@ Platforms [] mainPlats;
 
 boolean moveR = false, moveL = false, idle = true;
 
-int tlx = 0;
+
+int tlx = 0, platPoints = 0;
 
 public void setup() {
   size(750, 400);
@@ -28,15 +29,16 @@ public void setup() {
   backdrop = loadImage ("images/sky.png");
   mainPlats = new Platforms[3];
 
-  mainPlats[0] = new Platforms(200, 200, 100, 15);
-  mainPlats[1] = new Platforms(420, 300, 100, 15);
-  mainPlats[2] = new Platforms(570, 350, 100, 15);
+  mainPlats[0] = new Platforms(450,300, 100, 15);
+  mainPlats[1] = new Platforms(550,300, 100, 15);
+  mainPlats[2] = new Platforms(650,300, 100, 15);
 }
 
 public void draw() {
 
   backpic();  //scrolling background image based on the x coordinate
   level();
+  currentScore();
 
   player.boundaries();
   if (moveR == true) {
@@ -48,6 +50,7 @@ public void draw() {
   } else if (idle == true) {
     player.displayIdle();
   }
+
 }
 
 
@@ -72,16 +75,23 @@ public void level() {
   mainPlats[2].platTransition();
 }
 
+//Custom function for the background image
 public void backpic ()
 {
   image (backdrop, tlx, 0);
 
   tlx = tlx - mainPlats[0].rectVelocity;
 
-  if (tlx <= -1500){ //back ground image is jumped to the rtight when it gets quite far off screen
+  if (tlx <= -1500){ //background image is jumped to the right when it gets quite far off screen
     tlx = 0;
   }
+}
 
+//Function which displays the current accumulated platform points
+public void currentScore(){
+  fill(200);
+  textSize(15);
+  text("Current platform Score: " + platPoints, 0, 25);
 }
 
 // class pellet {
@@ -108,11 +118,12 @@ class Mainchar {
 
   int cycleRate, time, speed = 105;
 
-  float velocity = 3, gravity = 5, jump = 75;
+  float velocity = 3, gravity = 4.5f, jump = 130;
 
   float charX = 100, charY = 100, charWid = 25, charHi = 25;
 
   Mainchar() {
+    imageMode(CENTER);
     run = new PImage[6];
 
     idle = loadImage("images/sprite1.png");
@@ -180,7 +191,7 @@ class Mainchar {
 class Platforms {
   PImage platform;
   int rectX, rectY, rectWidth, rectHeight;
-  int rectVelocity = 6;
+  int rectVelocity = 10;
 
   Platforms(int x, int y, int w, int h) {
     rectX = x; 
@@ -194,8 +205,9 @@ class Platforms {
     platform = loadImage ("images/tiles.png");
     image(platform, rectX, rectY, rectWidth, rectHeight); //rectangle platforms replaced with images
 
-    if (person.charX > rectX && person.charX < rectX + rectWidth && person.charY < rectY){
-      player.charY = rectY - rectHeight-7.5f;
+    if (person.charX > rectX && person.charX < rectX + rectWidth && person.charY < rectY && person.charY > rectY - rectHeight - (rectHeight/2)){
+      player.charY = rectY-rectHeight-(rectHeight/2);
+      platPoints += 1;
     }
   }
 
@@ -204,8 +216,8 @@ class Platforms {
   }
 
   public void platTransition() {
-    if (rectX < -200) {
-      rectX = (PApplet.parseInt(random(700, 1000)));
+    if (rectX < -100) {
+      rectX = 750;
       rectY = (PApplet.parseInt(random(150, 350)));
     }
   }
