@@ -96,6 +96,7 @@ class Platforms {
   PImage platform;
   int rectX, rectY, rectWidth, rectHeight;
   int rectVelocity = 10;
+  int rectXset = 750;
 
   Platforms(int x, int y, int w, int h) {
     rectX = x; 
@@ -109,7 +110,7 @@ class Platforms {
     platform = loadImage ("images/tiles.png");
     image(platform, rectX, rectY, rectWidth, rectHeight); //rectangle platforms replaced with images
 
-    if (person.charX > rectX && person.charX < rectX + rectWidth && person.charY < rectY && person.charY > rectY - rectHeight - (rectHeight/2)){
+    if (person.charX > rectX && person.charX < rectX + rectWidth && person.charY < rectY && person.charY > rectY - rectHeight - (rectHeight/2)) {
       player.charY = rectY-rectHeight-(rectHeight/2);
       platPoints += 1;
     }
@@ -119,10 +120,10 @@ class Platforms {
     rectX -= rectVelocity;
   }
 
-  void platTransition() {
+  void platTransition(Platforms plats) {
     if (rectX < -100) {
-      rectX = 750;
-      rectY = (int(random(150, 350)));
+      rectX = plats.rectX + 250;
+      rectY = (int(random(200, 350)));
     }
   }
 }
