@@ -22,7 +22,7 @@ class Mainchar {
 
   int cycleRate, time, speed = 105;
 
-  float velocity = 3, gravity = 5;
+  float velocity = 3, gravity = 5, jump = 75;
 
   float charX = 100, charY = 100, charWid = 25, charHi = 25;
 
@@ -94,22 +94,23 @@ class Mainchar {
 class Platforms {
   PImage platform;
   int rectX, rectY, rectWidth, rectHeight;
-  int rectVelocity = 3;
+  int rectVelocity = 6;
 
   Platforms(int x, int y, int w, int h) {
     rectX = x; 
     rectY = y;
-   // rectX = (int(random(600, 800))); //Tried to randomise start position, failed hilariously
-   //rectY = (int(random(150, 350)));
     rectWidth = w;
     rectHeight = h;
   }
 
-  void displayPlat() {
+  void displayPlat(Mainchar person) {
+    imageMode(CORNER);
     platform = loadImage ("images/tiles.png");
-    //imageMode(CENTER);
+    image(platform, rectX, rectY, rectWidth, rectHeight); //rectangle platforms replaced with images
 
-    image(platform, rectX, rectY, 100, 15); //rectangle platforms replaced with images
+    if (person.charX > rectX && person.charX < rectX + rectWidth && person.charY < rectY){
+      player.charY = rectY - rectHeight-7.5;
+    }
   }
 
   void platMove() {

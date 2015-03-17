@@ -28,6 +28,11 @@ void keyPressed (){ //Allows the user control over the rectangle
       moveL = true;
       idle = false;
     }
+
+    if (keyCode == UP){
+      player.charY = player.charY - player.jump;
+    }
+
   }
 
 }
