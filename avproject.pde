@@ -1,8 +1,10 @@
 Mainchar player;
 PImage backdrop; 
 PImage ending;
+PImage menu;
+PImage start;
 
-int gameState = 1;
+int gameState = 4;
 
 boolean gameon = true;
 Platforms [] mainPlats;
@@ -17,31 +19,36 @@ void setup() {
   player = new Mainchar();
   backdrop = loadImage ("images/sky.png");
   ending = loadImage ("images/over.png");
+  menu = loadImage ("images/home.png");
+  start = loadImage ("images/play.png");  
+
   mainPlats = new Platforms[3];
 
-  mainPlats[0] = new Platforms(450, 300, 100, 15);
-  mainPlats[1] = new Platforms(550, 300, 100, 15);
-  mainPlats[2] = new Platforms(650, 300, 100, 15);
+  mainPlats[0] = new Platforms(450, 300, 120, 15);
+  mainPlats[1] = new Platforms(550, 300, 120, 15);
+  mainPlats[2] = new Platforms(650, 300, 120, 15);
 }
 
 void gameover () {
   image (ending, 0, 0, 750, 500);
 }
 
-
 void draw() {
 
-  backpic();  //scrolling background image based on the x coordinate
   if (player.charY >=height) {
     gameState = 2;
   }
 
   if (gameState == 1) {
+    backpic();
     level();
     characterState();
     currentScore();
   } else if (gameState == 2) {
     gameover();
+  } else if (gameState == 4) { //If game state = 4, which it starts off at, display the menu screen
+    menuScreen();
+    mouseClicked();
   }
 }
 
@@ -97,5 +104,19 @@ void currentScore() {
   fill(200);
   textSize(15);
   text("Current platform Score: " + platPoints, 0, 25);
+}
+
+
+void menuScreen () {
+  image (menu, width/2, height/2, width, height); //Displays the background and the game name
+  image (start, width/2, height/2+50, 200, 100); //Displays the play button/image
+}
+
+void mouseClicked() { //If user clicks within the "start" image, changes gamestate to 1. really slow/unreliable for some reason
+  if (gameState == 4) {
+    if (mouseX >= width/2 && mouseX <= width/2+200 && mouseY >= height/2+50 && mouseY <= height/2+150) {
+      gameState = 1;
+    }
+  }
 }
 

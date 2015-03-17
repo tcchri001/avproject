@@ -95,7 +95,7 @@ class Mainchar {
 class Platforms {
   PImage platform;
   int rectX, rectY, rectWidth, rectHeight;
-  int rectVelocity = 10;
+  int rectVelocity = 8;
   int rectXset = 750;
 
   Platforms(int x, int y, int w, int h) {
@@ -123,7 +123,7 @@ class Platforms {
   void platTransition(Platforms plats) {
     if (rectX < -100) {
       rectX = plats.rectX + 250;
-      rectY = (int(random(200, 350)));
+      rectY = (int(random(200, 300)));
     }
   }
 }
