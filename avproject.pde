@@ -2,7 +2,7 @@ Mainchar player;
 PImage backdrop; 
 PImage ending;
 PImage menu;
-PImage start;
+//PImage start;
 
 int gameState = 4;
 
@@ -15,12 +15,12 @@ boolean moveR = false, moveL = false, idle = true;
 int tlx = 0, platPoints = 0;
 
 void setup() {
-  size(750, 400);
+  size(750, 400, P2D);
   player = new Mainchar();
   backdrop = loadImage ("images/sky.png");
   ending = loadImage ("images/over.png");
-  menu = loadImage ("images/home.png");
-  start = loadImage ("images/play.png");  
+  menu = loadImage ("images/newhome.png");
+  //start = loadImage ("images/play.png");  
 
   mainPlats = new Platforms[3];
 
@@ -109,12 +109,12 @@ void currentScore() {
 
 void menuScreen () {
   image (menu, width/2, height/2, width, height); //Displays the background and the game name
-  image (start, width/2, height/2+50, 200, 100); //Displays the play button/image
+ //image (start, width/2, height/2+50, 200, 100); //Displays the play button/image
 }
 
-void mouseClicked() { //If user clicks within the "start" image, changes gamestate to 1. really slow/unreliable for some reason
+void mouseClicked() { //If user clicks within the "start" image, changes gamestate to 1. Runs all the time, not only if mouse clicked
   if (gameState == 4) {
-    if (mouseX >= width/2 && mouseX <= width/2+200 && mouseY >= height/2+50 && mouseY <= height/2+150) {
+    if (mouseX >= width/2-100 && mouseX <= width/2+100 && mouseY >= height/2 && mouseY <= height/2+100) {
       gameState = 1;
     }
   }
