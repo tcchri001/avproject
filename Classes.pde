@@ -11,7 +11,7 @@ class Mainchar {
   float charX = 100, charY = 100, charWid = 25, charHi = 25;
 
   Mainchar() {
-    imageMode(CENTER);
+    
     run = new PImage[6];
 
     idle = loadImage("images/sprite1.png");
