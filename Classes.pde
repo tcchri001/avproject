@@ -70,8 +70,8 @@ class Mainchar {
     if (charY>height-50) {
       charY -= velocity;
     }
-    if (charY<0) {
-      charY += velocity;
+    if (charY<=0) {
+      charY = 20;
     }
   }
 }
