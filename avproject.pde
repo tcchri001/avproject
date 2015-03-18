@@ -48,7 +48,6 @@ void draw() {
     gameover();
   } else if (gameState == 4) { //If game state = 4, which it starts off at, display the menu screen
     menuScreen();
-    mouseClicked();
   }
 }
 
@@ -112,7 +111,7 @@ void menuScreen () {
  //image (start, width/2, height/2+50, 200, 100); //Displays the play button/image
 }
 
-void mouseClicked() { //If user clicks within the "start" image, changes gamestate to 1. Runs all the time, not only if mouse clicked
+void mousePressed() { //If user clicks within the "start" image, changes gamestate to 1. Runs all the time, not only if mouse clicked
   if (gameState == 4) {
     if (mouseX >= width/2-100 && mouseX <= width/2+100 && mouseY >= height/2 && mouseY <= height/2+100) {
       gameState = 1;
