@@ -30,7 +30,10 @@ void keyPressed (){ //Allows the user control over the rectangle
     }
 
     if (keyCode == UP){
-      player.charY = player.charY - player.jump;
+      if (player.jumpCheck < 2){
+        player.charY = player.charY - player.jump;
+        player.jumpCheck +=1;
+      }
     }
 
   }

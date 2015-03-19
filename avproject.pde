@@ -38,14 +38,16 @@ void setup() {
 }
 
 void gameover () {
-  image (gameover, 0, 0, 750, 500);
+  image (gameover, 0, 0, 750, 400);
   //image (regame, width/2-110, height/2-37, 200, 75);
+  fill (255, 0, 0);
+  textSize (34);
+  text (platPoints, 425, 155); //Displays the final score at the end of the game
   player.charY = 0;
-  player.charX = 0;
+  player.charX = 100;
 }
 
 void draw() {
-  println(gameState);
 
   if (player.charY >=height) {
     gameState = 2;
@@ -136,13 +138,16 @@ void mousePressed() { //If user clicks within the "start" image, changes gamesta
   if (gameState == 4) {
     if (mouseX >= width/2-100 && mouseX <= width/2+100 && mouseY >= height/2 && mouseY <= height/2+100) {
       gameState = 1; //Above line is play button on main menu
-    } else if (mouseX >= width/2-170 && mouseX <= width/2+140 && mouseY >= height/2+100 && mouseY <= height/2+150)
-    {
+    } else if (mouseX >= width/2-170 && mouseX <= width/2+140 && mouseY >= height/2+100 && mouseY <= height/2+150) {
       gameState = 5; //Above line is settings button on main menu
     }
-  } else if (gameState == 2) { //Restart button
-    if (mouseX >= width/2-110 && mouseX <= width/2+110 && mouseY >= height/2-40 && mouseY <= height/2+40) {
-      gameState = 4;
+  } else if (gameState == 2) {
+    if (mouseX >= width/2-180 && mouseX <= width/2+190  && mouseY >= height/2-10 && mouseY <= height/2+50) {
+      gameState = 4; //Above line is main menu button from gameover screen
+      platPoints = 0; //Resets the points counter when any button on gameover screen is clicked
+    } else if (mouseX >= 250 && mouseX <= 500 && mouseY >= 255 && mouseY <= 315) {
+      gameState = 1; //Above line is replay button from gameover screen
+      platPoints = 0;
     }
   } else if (gameState == 5 ) { //Home button in settings
     if (mouseX >= width/2-110 && mouseX <= width/2+110 && mouseY >= height-80 && mouseY <= height) {

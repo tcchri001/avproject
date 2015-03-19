@@ -6,7 +6,7 @@ class Mainchar {
 
   int cycleRate, time, speed = 105;
 
-  float velocity = 3, gravity = 4.5, jump = 130;
+  float velocity = 3, gravity = 4.5, jump = 130, jumpCheck;
 
   float charX = 100, charY = 100, charWid = 25, charHi = 25;
 
@@ -95,8 +95,9 @@ class Platforms {
     image(platform, rectX, rectY, rectWidth, rectHeight); //rectangle platforms replaced with images
 
     if (person.charX > rectX && person.charX < rectX + rectWidth && person.charY < rectY && person.charY > rectY - rectHeight - (rectHeight/2)) {
-      player.charY = rectY-rectHeight-(rectHeight/2);
+      person.charY = rectY-rectHeight-(rectHeight/2);
       platPoints += 1;
+      person.jumpCheck = 0;
     }
   }
 
