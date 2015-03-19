@@ -11,7 +11,7 @@ class Mainchar {
   float charX = 100, charY = 100, charWid = 25, charHi = 25;
 
   Mainchar() {
-    
+
     run = new PImage[6];
 
     idle = loadImage("images/sprite1.png");
@@ -79,7 +79,6 @@ class Mainchar {
 class Platforms {
   PImage platform;
   int rectX, rectY, rectWidth, rectHeight;
-  int rectVelocity = 8;
   int rectXset = 750;
 
   Platforms(int x, int y, int w, int h) {
@@ -101,8 +100,8 @@ class Platforms {
     }
   }
 
-  void platMove() {
-    rectX -= rectVelocity;
+  void platMove(int z) {
+    rectX -= z;
   }
 
   void platTransition(Platforms plats) {

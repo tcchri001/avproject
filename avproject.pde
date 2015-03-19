@@ -2,12 +2,14 @@ Mainchar player;
 PImage sky; 
 PImage gameover;
 PImage menu;
-//PImage restart;
 PImage settings;
 PImage settingsmenu;
 PImage homebutton;
-//PImage start;
+PImage hard;
+PImage medium;
+PImage easy;
 
+int platspeed = 8; //speed of the platforms and background 
 int gameState = 4;
 
 boolean gameon = true;
@@ -27,11 +29,11 @@ void setup() {
   homebutton = loadImage ("images/homebutton.png");
   settings = loadImage ("images/settings.png");
   menu = loadImage ("images/menu.png");
-  //restart = loadImage ("images/restart.png");
-  //start = loadImage ("images/play.png");  
+  hard = loadImage ("images/Hard.png");
+  medium = loadImage ("images/Medium.png");
+  easy = loadImage ("images/Easy.png");
 
   mainPlats = new Platforms[3];
-
   mainPlats[0] = new Platforms(450, 300, 120, 15);
   mainPlats[1] = new Platforms(550, 300, 120, 15);
   mainPlats[2] = new Platforms(650, 300, 120, 15);
@@ -39,7 +41,7 @@ void setup() {
 
 void gameover () {
   image (gameover, 0, 0, 750, 400);
-  //image (regame, width/2-110, height/2-37, 200, 75);
+
   fill (255, 0, 0);
   textSize (34);
   text (platPoints, 425, 155); //Displays the final score at the end of the game
@@ -86,19 +88,19 @@ void level() {
 
   //This is the code for the first platform
   mainPlats[0].displayPlat(player);
-  mainPlats[0].platMove();
+  mainPlats[0].platMove(platspeed);
   mainPlats[0].platTransition(mainPlats[2]);
 
 
   //This is the code for the second platform
   mainPlats[1].displayPlat(player);
-  mainPlats[1].platMove();
+  mainPlats[1].platMove(platspeed);
   mainPlats[1].platTransition(mainPlats[0]);
 
 
   //This is the code for the third platform
   mainPlats[2].displayPlat(player);
-  mainPlats[2].platMove();
+  mainPlats[2].platMove(platspeed);
   mainPlats[2].platTransition(mainPlats[1]);
 }
 
@@ -107,7 +109,7 @@ void backpic ()
 {
   image (sky, tlx, 0);
 
-  tlx = tlx - mainPlats[0].rectVelocity;
+  tlx = tlx - platspeed;
 
   if (tlx <= -1500) { //background image is jumped to the right when it gets quite far off screen
     tlx = 0;
@@ -125,13 +127,15 @@ void settingsmenu() { //The settings menu
   imageMode(CORNER);
   image (settingsmenu, 0, 0, width, height); //The background on settings screen
   image (homebutton, width/2-100, height-80, 200, 80); //The home button in the  settings menu
+  image (hard, width/2-100, height/2-50, 200, 50);
+  image (medium, width/2-150, height/2, 300, 50);
+  image (easy, width/2-100, height/2+50, 200, 50);
 }
 
 void menuScreen () {
   imageMode(CORNER);
   image (menu, 0, 0, width, height); //Displays the background and the game name
   image (settings, width/2-165, height/2+100, 300, 50); //Displays the settings button/image
-  //image (start, width/2, height/2+50, 200, 100); //Displays the play button/image
 }
 
 void mousePressed() { //If user clicks within the "start" image, changes gamestate to 1. Runs all the time, not only if mouse clicked
@@ -149,8 +153,17 @@ void mousePressed() { //If user clicks within the "start" image, changes gamesta
       gameState = 1; //Above line is replay button from gameover screen
       platPoints = 0;
     }
-  } else if (gameState == 5 ) { //Home button in settings
+  } else if (gameState == 5 ) {
     if (mouseX >= width/2-110 && mouseX <= width/2+110 && mouseY >= height-80 && mouseY <= height) {
+      gameState = 4; //Home button in settings menu
+    } else if (mouseX >= 275  && mouseX <= 475 && mouseY >= 150 && mouseY <= 200) {
+      platspeed = 8; //Hard setting
+      gameState = 4;
+    } else if (mouseX >= 225 && mouseX <= 525 && mouseY >= 200 && mouseY <= 250) {
+      platspeed = 7; //Medium setting
+      gameState = 4;
+    } else if (mouseX >= 275 && mouseX <= 475 && mouseY >= 250 && mouseY <= 300) {
+      platspeed = 6; //Easy setting
       gameState = 4;
     }
   }
