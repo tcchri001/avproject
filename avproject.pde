@@ -60,6 +60,7 @@ void mousePressed() { //If user clicks within the "start" image, changes gamesta
   if (gameState == 1) {
     if (mouseX >= width/2-100 && mouseX <= width/2+100 && mouseY >= height/2 && mouseY <= height/2+100) {
       gameState = 3; //Above line is play button on main menu
+      gameSong.rewind();
     } else if (mouseX >= width/2-170 && mouseX <= width/2+140 && mouseY >= height/2+100 && mouseY <= height/2+150) {
       gameState = 2; //Above line is settings button on main menu
     }
