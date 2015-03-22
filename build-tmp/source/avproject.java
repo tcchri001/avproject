@@ -383,6 +383,10 @@ Main menu & gameplay audio: http://freemusicarchive.org/music/sawsquarenoise/Rot
 'Game Over' screen audio: https://www.youtube.com/watch?v=CnTjnBCrVwA
 Jumping sound effect (custom-generated): http://www.bfxr.net/
 
+Images used for sprites: https://learn.gold.ac.uk/mod/resource/view.php?id=246989
+Images for platforms: http://www.spriters-resource.com/snes/smarioworld/sheet/4587/
+Game over screen text: http://www.dafont.com/8bit-wonder.font
+Hard, medium and easy settings (text generated in website): http://textcraft.net/
 
 -----------------*/
   static public void main(String[] passedArgs) {
