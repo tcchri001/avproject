@@ -1,12 +1,23 @@
 
+//Custom function which utilises the earlier-initialised booleans to apply different member functions
+//of the main character's class
 void characterState() {
+  //Prevents the character from travelling beyond any of the program's screen boundaries
   player.boundaries();
+
+  //if moveR is true, it will display the character sprites according to display the object as
+  //though it is running, and move it to the right
   if (moveR == true) {
     player.displayRun();
     player.moveR();
+
+    //Similar to what happens if moveR is true, though it applies the principles based on the character
+    //moving to the left
   } else if (moveL == true) {
     player.displayRun();
     player.moveL();
+
+    //Simply displays the character's idle image
   } else if (idle == true) {
     player.displayIdle();
   }
@@ -14,6 +25,7 @@ void characterState() {
 
 
 void level() {
+  //Code which applies the gravity onto the character
   player.charY += player.gravity;
 
   //This is the code for the first platform

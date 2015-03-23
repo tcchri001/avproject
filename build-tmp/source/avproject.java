@@ -17,7 +17,10 @@ import java.io.IOException;
 
 public class avproject extends PApplet {
 
+//Initialises the object for the game's main character
 Mainchar player;
+
+//Initialises the image objects for the PImage class
 PImage sky, gameover, menu, settings, settingsmenu, homebutton, hard, medium, easy;
 
 //Sets up the minim audio plugin for the program
@@ -29,12 +32,13 @@ AudioPlayer menuSong, gameSong, deathSong, jumpSound;
 int platspeed = 8; //speed of the platforms and background 
 int gameState = 1; //Initial gameState for when the sketch is run
 
-boolean gameon = true;
 Platforms [] mainPlats;
 
+//Booleans used to change the different states of the character based on the keys being currently pressed 
 boolean moveR = false, moveL = false, idle = true;
 
-
+//Initialid variables which hold the value of the X position of the background, and the number of platform
+//points currently accumulated
 int tlx = 0, platPoints = 0;
 
 public void setup() {
@@ -111,18 +115,29 @@ public void mousePressed() { //If user clicks within the "start" image, changes 
   }
 }
 
+//Sets up the main character class
 class Mainchar {
+  //PImage array for the set of sprite images used to display the character's running animation
   PImage [] run;
+  
+  //PImage variable for the character's idle sprite image
   PImage idle;
 
+  //General variable for an array index
   int imgIDX = 1;
 
+  //Sets up the variables which determine the rate at which the program cycles through the array
+  //to display the character's running animation
   int cycleRate, time, speed = 105;
 
+  //Variables used to apply to the movement of the character, the gravity which affects its midair position
+  //the value by which it jumps, and check the number of times a character has jumped before touching a platform
   float velocity = 3, gravity = 4.5f, jump = 130, jumpCheck;
 
+  //Variables used to adjust the width, height and position of the main character object
   float charX = 100, charY = 100, charWid = 25, charHi = 25;
 
+  //Constructor for the class, which sets up the appropriate array(s) and loads the images used for the object
   Mainchar() {
 
     run = new PImage[6];
@@ -134,14 +149,18 @@ class Mainchar {
     }
   }
 
+  //Member function for displaying the appropriate images for when the object is idle
   public void displayIdle() {
     image(idle, charX, charY, charWid, charHi);
   }
 
+  //Member function for displaying the appropriate images for when the object is running
   public void displayRun() {
     image(run[imgIDX], charX, charY, charWid, charHi);
   }
 
+  //Member function moves the position of the character steadily to the right, and cycles
+  //through the initialised sprite images appropriately to display an animation
   public void moveR() {
 
     cycleRate = millis() - time;
@@ -157,6 +176,8 @@ class Mainchar {
     charX += velocity;
   }
 
+  //Member function moves the position of the character steadily to the left, and cycles
+  //through the initialised sprite images appropriately to display an animation
   public void moveL() {
 
     cycleRate = millis() - time;
@@ -189,11 +210,16 @@ class Mainchar {
   }
 }
 
+//Class which governs the objects used as platforms
 class Platforms {
-  PImage platform;
-  int rectX, rectY, rectWidth, rectHeight;
-  int rectXset = 750;
 
+  //Initialises the general image used for the platform
+  PImage platform;
+
+  //Initialises the variables used to adjust the width, height and position of the platforms
+  int rectX, rectY, rectWidth, rectHeight;
+
+  //Constructor for the class, which can later be used to adjust the setup position of the object
   Platforms(int x, int y, int w, int h) {
     rectX = x; 
     rectY = y;
@@ -201,6 +227,8 @@ class Platforms {
     rectHeight = h;
   }
 
+  //Member function which displays the platform on-screen, and produces the collision detection 
+  //between the platform and the main character object, referenced in function's parameter
   public void displayPlat(Mainchar person) {
     imageMode(CORNER);
     platform = loadImage ("images/tiles.png");
@@ -213,10 +241,13 @@ class Platforms {
     }
   }
 
+  //Member funciton which produces the constant movement of the platform object
   public void platMove(int z) {
     rectX -= z;
   }
 
+  //Member function which references it's own class in the parameter section to adjust the position
+  //of the platform after it passes through the screen boundary by the other platform object
   public void platTransition(Platforms plats) {
     if (rectX < -100) {
       rectX = plats.rectX + 250;
@@ -226,14 +257,25 @@ class Platforms {
 }
 
 
+//Custom function which utilises the earlier-initialised booleans to apply different member functions
+//of the main character's class
 public void characterState() {
+  //Prevents the character from travelling beyond any of the program's screen boundaries
   player.boundaries();
+
+  //if moveR is true, it will display the character sprites according to display the object as
+  //though it is running, and move it to the right
   if (moveR == true) {
     player.displayRun();
     player.moveR();
+
+    //Similar to what happens if moveR is true, though it applies the principles based on the character
+    //moving to the left
   } else if (moveL == true) {
     player.displayRun();
     player.moveL();
+
+    //Simply displays the character's idle image
   } else if (idle == true) {
     player.displayIdle();
   }
@@ -241,6 +283,7 @@ public void characterState() {
 
 
 public void level() {
+  //Code which applies the gravity onto the character
   player.charY += player.gravity;
 
   //This is the code for the first platform
@@ -312,39 +355,72 @@ public void characterDeath() {
     player.jumpCheck = 0;
   }
 }
+//Custom function which manages all of the gamestates for the game
 public void gameStateMaster(){
+  //If the gamestate is 1, then the program will load the main menu and the background audio
   if (gameState == 1) {
       menuScreen();
+
+      //Check to see if the song is currently playing and, if not, causes it to rewind the audio to it's
+      //begin and start playing
+      if (!menuSong.isPlaying()){
+      menuSong.rewind();
       menuSong.play();
+      }
+      //If the gamestate is 2, the program will load the settings menu and continue playing the song
+      //from the main menu
     } else if (gameState == 2) {
       settingsmenu();
-    } else if (gameState == 3) { //If game state = 4, which it starts off at, display the menu screen
+
+      //If the gamestate is 3, the program will load the background image for the game, the main level,
+      //the function for the different states of the character, the function for displaying the current 
+      //score, pauses the main menu song, and plays the main game song
+    } else if (gameState == 3) {
       backpic();
       level();
       characterState();
       currentScore();
       menuSong.pause();
+
+      if (!gameSong.isPlaying()){
+      gameSong.rewind();
       gameSong.play();
+      }
+
+      //If the gamestate is 4, the program will pause the audio from the main game, load the screen for the
+      //when the player falls and loses, and plays the audio for the death screen
     } else if (gameState == 4) {
       gameover();
       gameSong.pause();
+
+      if (!deathSong.isPlaying()){
+      deathSong.rewind();
       deathSong.play();
+      }
     }
 }    
-public void keyPressed (){ //Allows the user control over the rectangle
+//Function which governs conditions for when certain keys are pressed
+public void keyPressed(){
   
   if (key == CODED) {
     
+    //When the right-arrow key is pressed, it will move the character right and cycle through
+    //a set of sprite images to display the object as though it is running
     if (keyCode == RIGHT) { 
       moveR = true;
       idle = false;
     }
       
+    //when the left-arrow key is pressed, it will move the character to the left and cycle through
+    //a set of sprite images to display the object as through it is running backwards  
     if (keyCode == LEFT) { 
       moveL = true;
       idle = false;
     }
 
+    //when the up-arrow key is pressed, it will make the character jump up and addition a value of 1 
+    //to the jumpCheck variable from the maincharacter class, and it will play a jump sound before rewinding
+    //the audio file
     if (keyCode == UP){
       if (player.jumpCheck < 2 && gameState == 3){
         player.charY = player.charY - player.jump;
@@ -358,15 +434,20 @@ public void keyPressed (){ //Allows the user control over the rectangle
 
 }
 
+//Function which governs conditions for when certain keyboard keys are released
 public void keyReleased(){
  
  if (key == CODED) {
    
+   //When the right-arrow key is released, it will cause the character to stand still and display its
+   //idle sprite image
    if (keyCode == RIGHT){
      moveR = false;
      idle = true;
    }
    
+   //When the left-arrow key is released, it will cause the character to stand still and display its
+   //idle sprite image
    if (keyCode == LEFT){
      moveL = false;
      idle = true;

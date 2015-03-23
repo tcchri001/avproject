@@ -1,4 +1,7 @@
+//Initialises the object for the game's main character
 Mainchar player;
+
+//Initialises the image objects for the PImage class
 PImage sky, gameover, menu, settings, settingsmenu, homebutton, hard, medium, easy;
 
 //Sets up the minim audio plugin for the program
@@ -10,12 +13,13 @@ AudioPlayer menuSong, gameSong, deathSong, jumpSound;
 int platspeed = 8; //speed of the platforms and background 
 int gameState = 1; //Initial gameState for when the sketch is run
 
-boolean gameon = true;
 Platforms [] mainPlats;
 
+//Booleans used to change the different states of the character based on the keys being currently pressed 
 boolean moveR = false, moveL = false, idle = true;
 
-
+//Initialid variables which hold the value of the X position of the background, and the number of platform
+//points currently accumulated
 int tlx = 0, platPoints = 0;
 
 void setup() {
